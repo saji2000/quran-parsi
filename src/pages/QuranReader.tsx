@@ -9,14 +9,15 @@ import { ScrollArea } from "@/components/ui/scroll-area";
 import { useToast } from "@/hooks/use-toast";
 import { Switch } from "@/components/ui/switch";
 import { Label } from "@/components/ui/label";
+import { ToggleGroup, ToggleGroupItem } from "@/components/ui/toggle-group";
 
 const QuranReader = () => {
   const { chapterId, verseId } = useParams<{ chapterId: string; verseId?: string }>();
   const [currentChapter, setCurrentChapter] = useState(chapters[0]);
   const [verses, setVerses] = useState<Verse[]>([]);
   const [activeVerse, setActiveVerse] = useState<number | null>(null);
-  const [showArabic, setShowArabic] = useState(true);
-  const [showEnglish, setShowEnglish] = useState(true);
+  const [showArabic, setShowArabic] = useState(false);
+  const [showEnglish, setShowEnglish] = useState(false);
   const versesContainerRef = useRef<HTMLDivElement>(null);
   const { toast } = useToast();
   const navigate = useNavigate();
@@ -120,25 +121,29 @@ const QuranReader = () => {
           </div>
           
           <div className="flex flex-wrap items-center justify-center gap-4 pt-2">
-            <div className="flex items-center space-x-2 rtl:space-x-reverse">
-              <Switch 
-                id="show-arabic" 
-                checked={showArabic} 
-                onCheckedChange={setShowArabic} 
-              />
-              <Label htmlFor="show-arabic" className="text-sm">متن عربی</Label>
-              {showArabic ? <Eye className="h-4 w-4" /> : <EyeOff className="h-4 w-4" />}
-            </div>
-            
-            <div className="flex items-center space-x-2 rtl:space-x-reverse">
-              <Switch 
-                id="show-english" 
-                checked={showEnglish} 
-                onCheckedChange={setShowEnglish} 
-              />
-              <Label htmlFor="show-english" className="text-sm">متن انگلیسی</Label>
-              {showEnglish ? <Eye className="h-4 w-4" /> : <EyeOff className="h-4 w-4" />}
-            </div>
+            <ToggleGroup type="multiple" variant="outline" className="justify-center">
+              <div className="flex items-center gap-2 px-4 py-2 rounded-md bg-white dark:bg-slate-800 shadow-sm">
+                <Eye className={`h-5 w-5 ${showArabic ? "text-gold-500" : "text-slate-400"}`} />
+                <Label htmlFor="show-arabic" className="cursor-pointer">متن عربی</Label>
+                <Switch 
+                  id="show-arabic" 
+                  checked={showArabic} 
+                  onCheckedChange={setShowArabic}
+                  className="ml-2 data-[state=checked]:bg-gold-500"
+                />
+              </div>
+              
+              <div className="flex items-center gap-2 px-4 py-2 rounded-md bg-white dark:bg-slate-800 shadow-sm">
+                <Eye className={`h-5 w-5 ${showEnglish ? "text-gold-500" : "text-slate-400"}`} />
+                <Label htmlFor="show-english" className="cursor-pointer">متن انگلیسی</Label>
+                <Switch 
+                  id="show-english" 
+                  checked={showEnglish} 
+                  onCheckedChange={setShowEnglish}
+                  className="ml-2 data-[state=checked]:bg-gold-500"
+                />
+              </div>
+            </ToggleGroup>
           </div>
         </div>
         
@@ -156,27 +161,36 @@ const QuranReader = () => {
                     {verse.subtitle}
                   </div>
                 )}
-                <div className="verse-container">
-                  <span className="inline-flex items-center justify-center w-6 h-6 rounded-full bg-gold-100 dark:bg-gold-900/30 text-gold-600 dark:text-gold-400 text-xs ml-3">
+                <div className="flex flex-col items-end">
+                  <span className="inline-flex items-center justify-center w-6 h-6 rounded-full bg-gold-100 dark:bg-gold-900/30 text-gold-600 dark:text-gold-400 text-xs mb-2">
                     {verse.verse_number}
                   </span>
+                  
+                  {/* Farsi Translation - Always visible and prominent */}
+                  <div className="text-xl font-medium text-slate-800 dark:text-slate-300 text-right w-full mb-2">
+                    {verse.translation}
+                  </div>
+                  
+                  {/* Arabic Text - Toggle-able */}
                   {showArabic && (
-                    <span className="quran-text text-lg leading-loose">{verse.text}</span>
+                    <div className="verse-container w-full mb-2">
+                      <span className="quran-text text-lg leading-loose font-amiri">{verse.text}</span>
+                    </div>
+                  )}
+                  
+                  {/* English Text - Toggle-able */}
+                  {showEnglish && verse.english_text && (
+                    <div className="w-full text-left text-sm text-slate-500 dark:text-slate-500 italic">
+                      {verse.english_text}
+                    </div>
+                  )}
+                  
+                  {verse.footnote && (
+                    <div className="mt-3 text-xs text-slate-500 dark:text-slate-500 bg-slate-50 dark:bg-slate-800/50 p-2 rounded-md w-full">
+                      {verse.footnote}
+                    </div>
                   )}
                 </div>
-                <div className="mt-2 text-xl font-medium text-slate-800 dark:text-slate-300 pr-8">
-                  {verse.translation}
-                </div>
-                {showEnglish && verse.english_text && (
-                  <div className="mt-1 text-sm text-slate-500 dark:text-slate-500 pr-8 italic">
-                    {verse.english_text}
-                  </div>
-                )}
-                {verse.footnote && (
-                  <div className="mt-3 text-xs text-slate-500 dark:text-slate-500 bg-slate-50 dark:bg-slate-800/50 p-2 rounded-md">
-                    {verse.footnote}
-                  </div>
-                )}
               </div>
             ))}
           </div>
