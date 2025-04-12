@@ -3,7 +3,6 @@ import { useState, useEffect, useRef } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
-import { Separator } from "@/components/ui/separator";
 import { ChevronLeft, ChevronRight } from "lucide-react";
 import { chapters, getVerses, Verse } from "@/data/quranData";
 import { ScrollArea } from "@/components/ui/scroll-area";
@@ -121,16 +120,33 @@ const QuranReader = () => {
               <div
                 key={verse.id}
                 id={`verse-${verse.verse_number}`}
-                className={`my-4 p-2 transition-all duration-300 ${activeVerse === verse.verse_number ? 'active-verse' : 'hover:bg-slate-50 dark:hover:bg-slate-800/50'}`}
+                className={`my-4 p-2 transition-all duration-300 ${activeVerse === verse.verse_number ? 'bg-gold-50 dark:bg-gold-900/10 rounded-lg' : 'hover:bg-slate-50 dark:hover:bg-slate-800/50'}`}
                 onClick={() => navigateToVerse(verse.verse_number)}
               >
+                {verse.subtitle && (
+                  <div className="text-sm font-medium text-gold-600 dark:text-gold-400 mb-2">
+                    {verse.subtitle}
+                  </div>
+                )}
                 <div className="verse-container">
-                  <span className="verse-number">{verse.verse_number}</span>
-                  <span className="quran-text">{verse.text}</span>
+                  <span className="inline-flex items-center justify-center w-6 h-6 rounded-full bg-gold-100 dark:bg-gold-900/30 text-gold-600 dark:text-gold-400 text-xs ml-3">
+                    {verse.verse_number}
+                  </span>
+                  <span className="quran-text text-xl leading-loose">{verse.text}</span>
                 </div>
-                <div className="mt-2 text-sm text-slate-600 dark:text-slate-400 pr-5">
+                <div className="mt-2 text-sm text-slate-600 dark:text-slate-400 pr-8">
                   {verse.translation}
                 </div>
+                {verse.english_text && (
+                  <div className="mt-1 text-sm text-slate-500 dark:text-slate-500 pr-8 italic">
+                    {verse.english_text}
+                  </div>
+                )}
+                {verse.footnote && (
+                  <div className="mt-3 text-xs text-slate-500 dark:text-slate-500 bg-slate-50 dark:bg-slate-800/50 p-2 rounded-md">
+                    {verse.footnote}
+                  </div>
+                )}
               </div>
             ))}
           </div>
