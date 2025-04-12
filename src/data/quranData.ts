@@ -1,4 +1,3 @@
-
 /**
  * Main entry point for accessing Quran data
  * This file exports all necessary data and functions from the Quran modules
