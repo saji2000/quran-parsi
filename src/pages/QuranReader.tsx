@@ -3,16 +3,20 @@ import { useState, useEffect, useRef } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
-import { ChevronLeft, ChevronRight } from "lucide-react";
+import { ChevronLeft, ChevronRight, Eye, EyeOff } from "lucide-react";
 import { chapters, getVerses, Verse } from "@/data/quranData";
 import { ScrollArea } from "@/components/ui/scroll-area";
 import { useToast } from "@/hooks/use-toast";
+import { Switch } from "@/components/ui/switch";
+import { Label } from "@/components/ui/label";
 
 const QuranReader = () => {
   const { chapterId, verseId } = useParams<{ chapterId: string; verseId?: string }>();
   const [currentChapter, setCurrentChapter] = useState(chapters[0]);
   const [verses, setVerses] = useState<Verse[]>([]);
   const [activeVerse, setActiveVerse] = useState<number | null>(null);
+  const [showArabic, setShowArabic] = useState(true);
+  const [showEnglish, setShowEnglish] = useState(true);
   const versesContainerRef = useRef<HTMLDivElement>(null);
   const { toast } = useToast();
   const navigate = useNavigate();
@@ -86,32 +90,56 @@ const QuranReader = () => {
           </p>
         </div>
         
-        <div className="p-4 flex items-center justify-between bg-slate-50 dark:bg-slate-800/50 border-b border-slate-200 dark:border-slate-700/30">
-          <Button
-            variant="ghost"
-            size="sm"
-            onClick={() => navigateToChapter(currentChapter.id - 1)}
-            disabled={currentChapter.id <= 1}
-            className="flex items-center"
-          >
-            <ChevronRight className="h-4 w-4 ml-1" />
-            سوره قبلی
-          </Button>
-          
-          <div className="text-sm font-medium">
-            {activeVerse ? `آیه ${activeVerse} از ${currentChapter.total_verses}` : `${currentChapter.total_verses} آیه`}
+        <div className="p-4 bg-slate-50 dark:bg-slate-800/50 border-b border-slate-200 dark:border-slate-700/30">
+          <div className="flex items-center justify-between mb-2">
+            <Button
+              variant="ghost"
+              size="sm"
+              onClick={() => navigateToChapter(currentChapter.id - 1)}
+              disabled={currentChapter.id <= 1}
+              className="flex items-center"
+            >
+              <ChevronRight className="h-4 w-4 ml-1" />
+              سوره قبلی
+            </Button>
+            
+            <div className="text-sm font-medium">
+              {activeVerse ? `آیه ${activeVerse} از ${currentChapter.total_verses}` : `${currentChapter.total_verses} آیه`}
+            </div>
+            
+            <Button
+              variant="ghost"
+              size="sm"
+              onClick={() => navigateToChapter(currentChapter.id + 1)}
+              disabled={currentChapter.id >= chapters.length}
+              className="flex items-center"
+            >
+              سوره بعدی
+              <ChevronLeft className="h-4 w-4 mr-1" />
+            </Button>
           </div>
           
-          <Button
-            variant="ghost"
-            size="sm"
-            onClick={() => navigateToChapter(currentChapter.id + 1)}
-            disabled={currentChapter.id >= chapters.length}
-            className="flex items-center"
-          >
-            سوره بعدی
-            <ChevronLeft className="h-4 w-4 mr-1" />
-          </Button>
+          <div className="flex flex-wrap items-center justify-center gap-4 pt-2">
+            <div className="flex items-center space-x-2 rtl:space-x-reverse">
+              <Switch 
+                id="show-arabic" 
+                checked={showArabic} 
+                onCheckedChange={setShowArabic} 
+              />
+              <Label htmlFor="show-arabic" className="text-sm">متن عربی</Label>
+              {showArabic ? <Eye className="h-4 w-4" /> : <EyeOff className="h-4 w-4" />}
+            </div>
+            
+            <div className="flex items-center space-x-2 rtl:space-x-reverse">
+              <Switch 
+                id="show-english" 
+                checked={showEnglish} 
+                onCheckedChange={setShowEnglish} 
+              />
+              <Label htmlFor="show-english" className="text-sm">متن انگلیسی</Label>
+              {showEnglish ? <Eye className="h-4 w-4" /> : <EyeOff className="h-4 w-4" />}
+            </div>
+          </div>
         </div>
         
         <ScrollArea className="h-[60vh]">
@@ -132,12 +160,14 @@ const QuranReader = () => {
                   <span className="inline-flex items-center justify-center w-6 h-6 rounded-full bg-gold-100 dark:bg-gold-900/30 text-gold-600 dark:text-gold-400 text-xs ml-3">
                     {verse.verse_number}
                   </span>
-                  <span className="quran-text text-xl leading-loose">{verse.text}</span>
+                  {showArabic && (
+                    <span className="quran-text text-lg leading-loose">{verse.text}</span>
+                  )}
                 </div>
-                <div className="mt-2 text-sm text-slate-600 dark:text-slate-400 pr-8">
+                <div className="mt-2 text-xl font-medium text-slate-800 dark:text-slate-300 pr-8">
                   {verse.translation}
                 </div>
-                {verse.english_text && (
+                {showEnglish && verse.english_text && (
                   <div className="mt-1 text-sm text-slate-500 dark:text-slate-500 pr-8 italic">
                     {verse.english_text}
                   </div>

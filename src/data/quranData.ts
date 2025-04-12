@@ -135,6 +135,7 @@ export const chapters: Chapter[] = [
 
 // Sample translation data matching the provided format
 export const getVerses = (chapterId: number): Verse[] => {
+  // Implementation that doesn't rely on versesByChapter
   if (chapterId === 1) {
     return [
       {
