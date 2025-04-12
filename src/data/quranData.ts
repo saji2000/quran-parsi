@@ -19,7 +19,7 @@ export { findChapterAndVerse } from "@/utils/quranUtils";
  * @param chapterId - ID of the chapter to get verses for
  * @returns Array of verses for the specified chapter, or generic sample verses if not found
  */
-export const getVerses = (chapterId: number): Verse[] => {
+export const getVerses = (chapterId: number): import("@/types/quran").Verse[] => {
   // Get verses from the versesByChapter object
   const verses = versesByChapter[chapterId as keyof typeof versesByChapter];
   
