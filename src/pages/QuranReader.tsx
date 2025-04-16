@@ -1,3 +1,4 @@
+
 import { useState, useEffect, useRef } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import { Button } from "@/components/ui/button";
@@ -79,16 +80,22 @@ const QuranReader = () => {
   return (
     <div className="min-h-screen flex flex-col bg-slate-50 dark:bg-slate-900">
       <Card className="flex-1 flex flex-col border-0 shadow-none bg-transparent">
-        {/* Header Section */}
+        {/* Header Section with updated title formatting */}
         <div className="bg-gradient-to-r from-gold-50 to-white dark:from-slate-800 dark:to-slate-900 p-6 text-center border-b border-gold-100 dark:border-gold-900/30">
+          <div className="flex justify-center items-center mb-3">
+            <span className="text-xl font-bold text-gold-600 dark:text-gold-400">
+              سوره {currentChapter.id}
+            </span>
+          </div>
           <h1 className="text-2xl md:text-3xl font-bold mb-2 text-gold-600 dark:text-gold-400">
             {currentChapter.name}
           </h1>
-          <p className="text-sm mb-1 text-slate-500 dark:text-slate-400">
-            {currentChapter.transliteration} • {currentChapter.translation}
-          </p>
+          {currentChapter.arabic_name && (
+            <p className="text-lg text-slate-600 dark:text-slate-300 mb-1 font-arabic">
+              {currentChapter.arabic_name}
+            </p>
+          )}
           <p className="text-xs text-slate-500 dark:text-slate-400">
-            {currentChapter.type === "Meccan" ? "مکی" : "مدنی"} •{" "}
             {currentChapter.total_verses} آیه
           </p>
         </div>
@@ -168,7 +175,7 @@ const QuranReader = () => {
           </div>
         </div>
 
-        {/* Verses Section */}
+        {/* Verses Section with updated chapter and verse display */}
         <div className="flex-1 p-6" ref={versesContainerRef}>
           {verses.map((verse) => (
             <div
@@ -187,18 +194,21 @@ const QuranReader = () => {
                 </div>
               )}
               <div className="flex flex-col items-end">
-                <span className="inline-flex items-center justify-center w-6 h-6 rounded-full bg-gold-100 dark:bg-gold-900/30 text-gold-600 dark:text-gold-400 text-xs mb-2">
-                  {verse.verse_number}
-                </span>
+                {/* Chapter and Verse Number Display */}
+                <div className="flex items-center justify-end mb-2 text-gold-600 dark:text-gold-400">
+                  <span className="inline-flex items-center justify-center rounded-md bg-gold-100 dark:bg-gold-900/30 px-2 py-1 text-sm">
+                    {currentChapter.id}:{verse.verse_number}
+                  </span>
+                </div>
 
                 {/* Farsi Translation */}
-                <div className="text-xl font-medium text-slate-800 dark:text-slate-300 text-right w-full mb-2">
+                <div className="text-xl font-medium text-slate-800 dark:text-slate-300 text-right w-full mb-3">
                   {verse.translation}
                 </div>
 
                 {/* Arabic Text */}
                 {showArabic && (
-                  <div className="verse-container w-full mb-2">
+                  <div className="verse-container w-full mb-2 text-right">
                     <span className="quran-text text-lg leading-loose font-amiri">
                       {verse.text}
                     </span>
@@ -207,7 +217,7 @@ const QuranReader = () => {
 
                 {/* English Text */}
                 {showEnglish && verse.english_text && (
-                  <div className="w-full text-left text-sm text-slate-500 dark:text-slate-500 italic">
+                  <div className="w-full text-right text-sm text-slate-500 dark:text-slate-500 ltr:text-left rtl:text-right">
                     {verse.english_text}
                   </div>
                 )}
