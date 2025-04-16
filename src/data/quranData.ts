@@ -1,4 +1,3 @@
-
 // Types for Quran data structure
 export interface Chapter {
   id: number;
@@ -7,6 +6,7 @@ export interface Chapter {
   translation: string;
   type: string;
   total_verses: number;
+  arabic_name?: string; // Added this property as optional
 }
 
 export interface Verse {

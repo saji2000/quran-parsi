@@ -1,4 +1,3 @@
-
 import { useState, useEffect, useRef } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import { Button } from "@/components/ui/button";
@@ -24,7 +23,6 @@ const QuranReader = () => {
   const { toast } = useToast();
   const navigate = useNavigate();
 
-  // Load chapter and verses
   useEffect(() => {
     if (chapterId) {
       const id = parseInt(chapterId, 10);
@@ -51,7 +49,6 @@ const QuranReader = () => {
     }
   }, [chapterId, verseId, navigate, toast]);
 
-  // Scroll to active verse
   useEffect(() => {
     if (activeVerse && versesContainerRef.current) {
       const verseElement = document.getElementById(`verse-${activeVerse}`);
@@ -63,14 +60,12 @@ const QuranReader = () => {
     }
   }, [activeVerse, verses]);
 
-  // Handle chapter navigation
   const navigateToChapter = (id: number) => {
     if (id >= 1 && id <= chapters.length) {
       navigate(`/quran/${id}`);
     }
   };
 
-  // Handle verse navigation
   const navigateToVerse = (verseNumber: number) => {
     if (verseNumber >= 1 && verseNumber <= currentChapter.total_verses) {
       navigate(`/quran/${currentChapter.id}/${verseNumber}`);
@@ -80,7 +75,6 @@ const QuranReader = () => {
   return (
     <div className="min-h-screen flex flex-col bg-slate-50 dark:bg-slate-900">
       <Card className="flex-1 flex flex-col border-0 shadow-none bg-transparent">
-        {/* Header Section with updated title formatting */}
         <div className="bg-gradient-to-r from-gold-50 to-white dark:from-slate-800 dark:to-slate-900 p-6 text-center border-b border-gold-100 dark:border-gold-900/30">
           <div className="flex justify-center items-center mb-3">
             <span className="text-xl font-bold text-gold-600 dark:text-gold-400">
@@ -90,9 +84,9 @@ const QuranReader = () => {
           <h1 className="text-2xl md:text-3xl font-bold mb-2 text-gold-600 dark:text-gold-400">
             {currentChapter.name}
           </h1>
-          {currentChapter.arabic_name && (
-            <p className="text-lg text-slate-600 dark:text-slate-300 mb-1 font-arabic">
-              {currentChapter.arabic_name}
+          {currentChapter.translation && (
+            <p className="text-lg text-slate-600 dark:text-slate-300 mb-1">
+              {currentChapter.translation}
             </p>
           )}
           <p className="text-xs text-slate-500 dark:text-slate-400">
@@ -100,7 +94,6 @@ const QuranReader = () => {
           </p>
         </div>
 
-        {/* Navigation and Toggles */}
         <div className="p-4 bg-slate-50 dark:bg-slate-800/50 border-b border-slate-200 dark:border-slate-700/30">
           <div className="flex items-center justify-between mb-2">
             <Button
@@ -175,7 +168,6 @@ const QuranReader = () => {
           </div>
         </div>
 
-        {/* Verses Section with updated chapter and verse display */}
         <div className="flex-1 p-6" ref={versesContainerRef}>
           {verses.map((verse) => (
             <div
@@ -194,19 +186,16 @@ const QuranReader = () => {
                 </div>
               )}
               <div className="flex flex-col items-end">
-                {/* Chapter and Verse Number Display */}
                 <div className="flex items-center justify-end mb-2 text-gold-600 dark:text-gold-400">
                   <span className="inline-flex items-center justify-center rounded-md bg-gold-100 dark:bg-gold-900/30 px-2 py-1 text-sm">
                     {currentChapter.id}:{verse.verse_number}
                   </span>
                 </div>
 
-                {/* Farsi Translation */}
                 <div className="text-xl font-medium text-slate-800 dark:text-slate-300 text-right w-full mb-3">
                   {verse.translation}
                 </div>
 
-                {/* Arabic Text */}
                 {showArabic && (
                   <div className="verse-container w-full mb-2 text-right">
                     <span className="quran-text text-lg leading-loose font-amiri">
@@ -215,7 +204,6 @@ const QuranReader = () => {
                   </div>
                 )}
 
-                {/* English Text */}
                 {showEnglish && verse.english_text && (
                   <div className="w-full text-right text-sm text-slate-500 dark:text-slate-500 ltr:text-left rtl:text-right">
                     {verse.english_text}
@@ -232,7 +220,6 @@ const QuranReader = () => {
           ))}
         </div>
 
-        {/* Verse Navigation */}
         {activeVerse && (
           <div className="p-4 border-t border-slate-200 dark:border-slate-700/30 flex justify-between items-center bg-slate-50 dark:bg-slate-800/50">
             <Button
