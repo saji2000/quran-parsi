@@ -75,13 +75,13 @@ const QuranReader = () => {
   return (
     <div className="min-h-screen flex flex-col bg-slate-50 dark:bg-slate-900">
       <Card className="flex-1 flex flex-col border-0 shadow-none bg-transparent">
-        <div className="bg-gradient-to-r from-gold-50 to-white dark:from-slate-800 dark:to-slate-900 p-6 text-center border-b border-gold-100 dark:border-gold-900/30">
+        <div className="bg-gradient-to-r from-azure-50 to-white dark:from-slate-800 dark:to-slate-900 p-6 text-center border-b border-azure-100 dark:border-azure-900/30">
           <div className="flex justify-center items-center mb-3">
-            <span className="text-xl font-bold text-gold-600 dark:text-gold-400">
+            <span className="text-xl font-bold text-azure-600 dark:text-azure-400">
               سوره {currentChapter.id}
             </span>
           </div>
-          <h1 className="text-2xl md:text-3xl font-bold mb-2 text-gold-600 dark:text-gold-400">
+          <h1 className="text-2xl md:text-3xl font-bold mb-2 text-azure-600 dark:text-azure-400">
             {currentChapter.name}
           </h1>
           {currentChapter.translation && (
@@ -175,14 +175,14 @@ const QuranReader = () => {
               id={`verse-${verse.verse_number}`}
               className={`my-4 p-2 transition-all duration-300 ${
                 activeVerse === verse.verse_number
-                  ? "bg-gold-50 dark:bg-gold-900/10 rounded-lg"
+                  ? "bg-azure-50 dark:bg-azure-900/10 rounded-lg"
                   : "hover:bg-slate-50 dark:hover:bg-slate-800/50"
               }`}
               onClick={() => navigateToVerse(verse.verse_number)}
             >
               <div className="flex flex-col items-end">
-                <div className="flex items-center justify-end mb-2 text-gold-600 dark:text-gold-400">
-                  <span className="inline-flex items-center justify-center rounded-md bg-gold-100 dark:bg-gold-900/30 px-2 py-1 text-sm">
+                <div className="flex items-center justify-end mb-2 text-azure-600 dark:text-azure-400">
+                  <span className="inline-flex items-center justify-center rounded-md bg-azure-100 dark:bg-azure-900/30 px-2 py-1 text-sm">
                     {currentChapter.id}:{verse.verse_number}
                   </span>
                 </div>
@@ -222,7 +222,7 @@ const QuranReader = () => {
               size="sm"
               onClick={() => navigateToVerse(activeVerse - 1)}
               disabled={activeVerse <= 1}
-              className="border-gold-200 dark:border-gold-900/30"
+              className="border-azure-200 dark:border-azure-900/30"
             >
               <ChevronRight className="h-4 w-4 ml-1" />
               آیه قبلی
@@ -233,7 +233,7 @@ const QuranReader = () => {
               size="sm"
               onClick={() => navigateToVerse(activeVerse + 1)}
               disabled={activeVerse >= currentChapter.total_verses}
-              className="border-gold-200 dark:border-gold-900/30"
+              className="border-azure-200 dark:border-azure-900/30"
             >
               آیه بعدی
               <ChevronLeft className="h-4 w-4 mr-1" />
