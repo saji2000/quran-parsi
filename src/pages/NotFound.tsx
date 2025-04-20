@@ -1,4 +1,3 @@
-
 import { useEffect } from "react";
 import { useLocation, Link } from "react-router-dom";
 import { Button } from "@/components/ui/button";
@@ -17,7 +16,7 @@ const NotFound = () => {
   return (
     <div className="min-h-screen flex items-center justify-center bg-slate-50 dark:bg-slate-900 p-4">
       <div className="text-center max-w-md">
-        <div className="mb-6 text-gold-500 dark:text-gold-400">
+        <div className="mb-6 text-azure-500 dark:text-azure-400">
           <svg 
             xmlns="http://www.w3.org/2000/svg" 
             viewBox="0 0 24 24" 
@@ -32,7 +31,7 @@ const NotFound = () => {
           </svg>
         </div>
         
-        <h1 className="text-4xl font-bold mb-4 text-gold-600 dark:text-gold-400 font-amiri">
+        <h1 className="text-4xl font-bold mb-4 text-azure-600 dark:text-azure-400 font-amiri">
           ۴۰۴
         </h1>
         
@@ -44,13 +43,13 @@ const NotFound = () => {
         </div>
         
         <div className="flex flex-col sm:flex-row gap-3 justify-center">
-          <Button asChild className="bg-gold-500 hover:bg-gold-600 text-white">
+          <Button asChild className="bg-azure-500 hover:bg-azure-600 text-white">
             <Link to="/">
               <Home className="ml-2 h-4 w-4" />
               بازگشت به خانه
             </Link>
           </Button>
-          <Button asChild variant="outline" className="border-gold-200 dark:border-gold-800/30">
+          <Button asChild variant="outline" className="border-azure-200 dark:border-azure-800/30">
             <Link to="/search">
               <Search className="ml-2 h-4 w-4" />
               جستجو در قرآن

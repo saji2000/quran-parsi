@@ -1,4 +1,3 @@
-
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { Button } from "@/components/ui/button";
@@ -45,9 +44,9 @@ const Search = () => {
 
   return (
     <div className="container mx-auto py-12 px-4 max-w-2xl">
-      <Card className="border border-gold-100 dark:border-slate-700">
+      <Card className="border border-azure-100 dark:border-slate-700">
         <CardHeader className="text-center">
-          <CardTitle className="text-2xl font-bold text-gold-600 dark:text-gold-400">
+          <CardTitle className="text-2xl font-bold text-azure-600 dark:text-azure-400">
             جستجو در قرآن
           </CardTitle>
           <CardDescription>
@@ -70,7 +69,7 @@ const Search = () => {
             
             <Button 
               type="submit" 
-              className="w-full bg-gold-500 hover:bg-gold-600 text-white"
+              className="w-full bg-azure-500 hover:bg-azure-600 text-white"
             >
               جستجو
             </Button>
@@ -84,7 +83,7 @@ const Search = () => {
                   key={example}
                   variant="outline"
                   size="sm"
-                  className="text-gold-600 dark:text-gold-400 border-gold-200 dark:border-gold-800/30"
+                  className="text-azure-600 dark:text-azure-400 border-azure-200 dark:border-azure-800/30"
                   onClick={() => {
                     setSearchInput(example);
                     const result = findChapterAndVerse(example);
