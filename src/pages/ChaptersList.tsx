@@ -1,4 +1,3 @@
-
 import { useState } from "react";
 import { Link } from "react-router-dom";
 import { chapters } from "@/data/quranData";
@@ -8,11 +7,10 @@ import { SearchIcon } from "lucide-react";
 
 const ChaptersList = () => {
   const [searchTerm, setSearchTerm] = useState("");
-  
+
   const filteredChapters = chapters.filter(
     (chapter) =>
       chapter.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
-      chapter.transliteration.toLowerCase().includes(searchTerm.toLowerCase()) ||
       chapter.translation.toLowerCase().includes(searchTerm.toLowerCase()) ||
       chapter.id.toString().includes(searchTerm)
   );
@@ -27,7 +25,7 @@ const ChaptersList = () => {
           سوره مورد نظر خود را انتخاب کنید
         </p>
       </div>
-      
+
       <div className="relative max-w-lg mx-auto mb-8">
         <Input
           type="text"
@@ -39,7 +37,7 @@ const ChaptersList = () => {
         />
         <SearchIcon className="absolute top-3 left-3 h-5 w-5 text-slate-400" />
       </div>
-      
+
       <ScrollArea className="h-[60vh] rounded-lg border border-slate-200 dark:border-slate-700">
         <div className="grid grid-cols-1 md:grid-cols-2 gap-2 p-4">
           {filteredChapters.map((chapter) => (
@@ -54,9 +52,9 @@ const ChaptersList = () => {
               <div className="flex-grow">
                 <div className="flex justify-between">
                   <h3 className="font-bold">{chapter.name}</h3>
-                  <span className="text-xs text-slate-500 dark:text-slate-400">
+                  {/* <span className="text-xs text-slate-500 dark:text-slate-400">
                     {chapter.type === "Meccan" ? "مکی" : "مدنی"}
-                  </span>
+                  </span> */}
                 </div>
                 <div className="flex justify-between text-sm text-slate-600 dark:text-slate-300">
                   <p>{chapter.translation}</p>
