@@ -180,11 +180,6 @@ const QuranReader = () => {
               }`}
               onClick={() => navigateToVerse(verse.verse_number)}
             >
-              {verse.subtitle && (
-                <div className="text-sm font-medium text-gold-600 dark:text-gold-400 mb-2">
-                  {verse.subtitle}
-                </div>
-              )}
               <div className="flex flex-col items-end">
                 <div className="flex items-center justify-end mb-2 text-gold-600 dark:text-gold-400">
                   <span className="inline-flex items-center justify-center rounded-md bg-gold-100 dark:bg-gold-900/30 px-2 py-1 text-sm">
@@ -205,7 +200,7 @@ const QuranReader = () => {
                 )}
 
                 {showEnglish && verse.english_text && (
-                  <div className="w-full text-right text-sm text-slate-500 dark:text-slate-500 ltr:text-left rtl:text-right">
+                  <div className="w-full text-right text-base md:text-lg text-slate-500 dark:text-slate-500 ltr:text-left rtl:text-right">
                     {verse.english_text}
                   </div>
                 )}
